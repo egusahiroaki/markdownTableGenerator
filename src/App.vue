@@ -1,11 +1,33 @@
 <template>
   <div id="app">
 
-    <el-radio-group v-model="labelPosition" size="small">
+    <el-radio-group v-model="labelPosition" size="small" style="margin-bottom:10px;">
       <el-radio-button label="left">Left</el-radio-button>
       <el-radio-button label="right">Right</el-radio-button>
       <el-radio-button label="top">Top</el-radio-button>
     </el-radio-group>
+
+
+    <el-table
+      :data="tableData"
+      border
+      style="width: 50%">
+      <el-table-column
+        prop="column1"
+        label="Column1"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="column2"
+        label="Column1"
+        width="180">
+      </el-table-column>
+      <el-table-column
+        prop="column3"
+        label="Column1">
+      </el-table-column>
+    </el-table>
+
     <!--
     <router-view></router-view>
     -->
@@ -17,7 +39,20 @@ export default {
   name: 'app',
   data () {
     return {
-      labelPosition: 'right'
+      labelPosition: 'right',
+      tableData: [{
+        column1: '',
+        column2: '',
+        column3: ''
+      }, {
+        column1: '',
+        column2: '',
+        column3: ''
+      }, {
+        column1: '',
+        column2: '',
+        column3: ''
+      }]
     }
   },
   methods: {
