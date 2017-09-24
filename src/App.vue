@@ -64,7 +64,7 @@ export default {
           {text: 'd', edit: false}
         ]
       ],
-      sizingCache: [] // サイズ変更に利用するキャッシュ
+      valuesCache: []
     }
   },
   computed: {
@@ -162,6 +162,11 @@ export default {
       window.getSelection().removeAllRanges()
       window.getSelection().addRange(range)
       document.execCommand('copy')
+      this.$message({
+        message: 'Copy Success',
+        type: 'success',
+        duration: 1000
+      })
     }
   },
   directives: {
@@ -180,84 +185,42 @@ export default {
   color: #2c3e50;
 }
 
-  .el-row {
-    margin-bottom: 20px;
-    &:last-child {
-      margin-bottom: 0;
-    }
-  }
-  .el-col {
-    border-radius: 4px;
-    margin-bottom: 30px;
-  }
+table {
+  border: solid 1px #000000;
+  border-collapse: collapse;
+  table-layout: fixed;
+}
 
-  .time {
-    font-size: 13px;
-    color: #999;
-  }
-  
-  .bottom {
-    margin-top: 13px;
-    line-height: 12px;
-  }
+td {
+  width: 20px;
+  height: 30px;
+  border: solid 1px #ff0000
+}
 
-  .button {
-    padding: 0;
-    float: right;
-  }
+input[type="text"] {
+   width: 100%; 
+   box-sizing: border-box;
+   -webkit-box-sizing:border-box;
+   -moz-box-sizing: border-box;
+}
 
-  .image {
-    width: 50%;
-    text-align: center;
-    display: block;
-  }
+pre {
+  width: 50% ;
+  border: 1px solid #000 ;
+  text-align: left;
+  white-space: pre-wrap ;
+}
 
-  .clearfix:before,
-  .clearfix:after {
-      display: table;
-      content: "";
-  }
-  
-  .clearfix:after {
-      clear: both
-  }
+#myArea::selection {
+  background-color:transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
 
-  table {
-    border: solid 1px #000000;
-    border-collapse: collapse;
-    table-layout: fixed;
-  }
-
-  td {
-    width: 20px;
-    height: 30px;
-    border: solid 1px #ff0000
-  }
-
-  input[type="text"] {
-     width: 100%; 
-     box-sizing: border-box;
-     -webkit-box-sizing:border-box;
-     -moz-box-sizing: border-box;
-  }
-
-  pre {
-    width: 50% ;
-    border: 1px solid #000 ;
-    text-align: left;
-    white-space: pre-wrap ;
-  }
-
-  #myArea::selection {
-    background-color:transparent;
-    -webkit-touch-callout: none;
-    -webkit-user-select: none;
-    -khtml-user-select: none;
-    -moz-user-select: none;
-    -ms-user-select: none;
-    user-select: none;
-
-    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
-    tap-highlight-color: rgba(0, 0, 0, 0);
-  }
+  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+  tap-highlight-color: rgba(0, 0, 0, 0);
+}
 </style>
