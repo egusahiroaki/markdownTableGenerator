@@ -21,7 +21,7 @@
        </tr>
     </table>
 
-    <el-button @click="copyToClipBoard">Copy to ClipBoard</el-button>
+    <el-button @click="copyToClipBoard" type="primary" icon="document">Copy to ClipBoard</el-button>
     <pre>
       <code id="mdArea">
         {{generateMdTable}}
