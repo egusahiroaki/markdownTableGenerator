@@ -58,17 +58,9 @@ export default {
   },
   methods: {
     selectValue (cell) {
-      // console.log(event.target.getElementsByClassName('display')[0].innerHTML === '')
-      // console.log(event.target.getElementsByClassName('display')[0].innerHTML)
-      // if (event.target.getElementsByClassName('display')[0].innerHTML === '') { // 最初の、入力がない場合
-      //   this. = true
-      // }
-
       if (cell.text === '') { // 最初の、入力がない場合
         cell.edit = true
       }
-
-      console.log(cell.edit)
     },
     submit (cell) {
       cell.edit = !cell.edit
