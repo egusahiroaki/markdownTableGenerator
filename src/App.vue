@@ -3,8 +3,8 @@
 
     <el-radio-group v-model="labelPosition" size="small" style="margin-bottom:10px;" @change="changeLayout">
       <el-radio-button label="left">Left</el-radio-button>
-      <el-radio-button label="right">Right</el-radio-button>
       <el-radio-button label="center">Center</el-radio-button>
+      <el-radio-button label="right">Right</el-radio-button>
     </el-radio-group>
 
 
@@ -44,7 +44,7 @@ export default {
   name: 'app',
   data () {
     return {
-      labelPosition: 'right',
+      labelPosition: 'center',
       values: [
         [
           {text: '', edit: false},
@@ -72,9 +72,20 @@ export default {
       all += title + '\n'
 
       // ２段目
-      var arrangement = '|'
+      var arrangement = this.labelPosition === 'left' ? '|:' : '|'
       for (var j = 0; j < this.values[0].length; j++) {
-        arrangement += '-'.repeat(this.values[0][j].text.length + 1) + '--|'
+        switch (this.labelPosition) {
+          case 'left':
+            arrangement += ':'
+            arrangement += '-'.repeat(this.values[0][j].text.length + 1) + '--|'
+            break
+          case 'center':
+            arrangement += '-'.repeat(this.values[0][j].text.length + 1) + '--|'
+            break
+          case 'right':
+            arrangement += '-'.repeat(this.values[0][j].text.length + 1) + '--:|'
+            break
+        }
       }
 
       all += arrangement + '\n'
