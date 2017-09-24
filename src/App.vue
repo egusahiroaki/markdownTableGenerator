@@ -117,14 +117,18 @@ export default {
     },
     changeRow (val) { // 行追加
       this.beforeRowNum = this.rowNum
-      var newRow = []
       if (val > this.beforeRowNum) {
-        for (var i = 0; i < parseInt(this.colNum); i++) {
-          newRow.push({text: '', edit: false})
+        for (var i = 0; i < val - this.beforeRowNum; i++) {
+          var newRow = []
+          for (var j = 0; j < this.colNum; j++) {
+            newRow.push({text: '', edit: false})
+          }
+          this.values.push(newRow)
         }
-        this.values.push(newRow)
       } else {
-        this.values.pop()
+        for (var k = 0; k < this.beforeRowNum - val; k++) {
+          this.values.pop()
+        }
       }
     },
     changeCol (val) { // 列追加
