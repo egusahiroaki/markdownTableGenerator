@@ -1,10 +1,10 @@
 <template>
   <div id="app">
 
-    <el-radio-group v-model="labelPosition" size="small" style="margin-bottom:10px;">
+    <el-radio-group v-model="labelPosition" size="small" style="margin-bottom:10px;" @change="changeLayout">
       <el-radio-button label="left">Left</el-radio-button>
       <el-radio-button label="right">Right</el-radio-button>
-      <el-radio-button label="top">Top</el-radio-button>
+      <el-radio-button label="center">Center</el-radio-button>
     </el-radio-group>
 
 
@@ -88,12 +88,14 @@ export default {
         all += row + '\n'
       }
 
-      console.log(all)
       all += ''
       return all
     }
   },
   methods: {
+    changeLayout () {
+      console.log(this.labelPosition)
+    },
     selectValue (cell) {
       if (cell.text === '') { // 最初の、入力がない場合
         cell.edit = true
