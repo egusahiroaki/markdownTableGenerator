@@ -66,7 +66,7 @@ export default {
       // タイトル
       var title = '|' // 左端
       for (var i = 0; i < this.values[0].length; i++) {
-        title += this.values[0][i].text + '|'
+        title += ' ' + this.values[0][i].text + ' |'
       }
 
       all += title + '\n'
@@ -83,7 +83,7 @@ export default {
       for (var k = 1; k < this.values.length; k++) {
         var row = '|'
         for (var l = 0; l < this.values[k].length; l++) {
-          row += this.values[k][l].text + '|'
+          row += ' ' + this.values[k][l].text + ' |'
         }
         all += row + '\n'
       }
