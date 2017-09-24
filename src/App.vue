@@ -9,14 +9,11 @@
 
 
     <table style="border: solid 1px #000000; border-collapse: collapse;">
-       <tr>
+       <tr v-for="cells in values">
           <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
             <input v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
           </td>
-       </tr>
-       <tr>
-          <td>2</td><td>2</td><td>2</td>
        </tr>
     </table>
 
@@ -42,12 +39,17 @@ export default {
   data () {
     return {
       labelPosition: 'right',
-      currentEdittingCellText: '',
-      textEdit: false,
-      cells: [
-        {text: '', edit: false},
-        {text: 'b', edit: false},
-        {text: 'c', edit: false}
+      values: [
+        [
+          {text: '', edit: false},
+          {text: 'b', edit: false},
+          {text: 'c', edit: false}
+        ],
+        [
+          {text: '', edit: false},
+          {text: 'd', edit: false},
+          {text: 'e', edit: false}
+        ]
       ]
     }
   },
