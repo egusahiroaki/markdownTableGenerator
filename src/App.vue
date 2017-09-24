@@ -12,13 +12,28 @@
       <el-input-number :min="2" size="small" v-model="colNum" @change="changeCol"></el-input-number>
     </div>
 
+<!-- 
+    <el-upload
+      class="upload-demo"
+      >
+      <el-button size="small" type="primary" icon="document" @click="importCSV">Import from CSV</el-button>
+      <div slot="tip" class="el-upload__tip">csv files with a size less than 500kb</div>
+    </el-upload>
+ -->
+
     <table>
-       <tr v-for="cells in values">
+      <draggable :list="values">
+        <tr v-for="cells in values">
+          <td>
+            -
+          </td>
+
           <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
-            <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
+            <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
           </td>
-       </tr>
+        </tr>
+      </draggable>
     </table>
 
     <el-button @click="copyToClipBoard" type="primary" icon="document">Copy to ClipBoard</el-button>
@@ -36,6 +51,7 @@
 
 <script>
 import Vue from 'vue'
+import draggable from 'vuedraggable'
 
 const focus = {
   inserted (el) {
@@ -47,6 +63,9 @@ const focus = {
 
 export default {
   name: 'app',
+  components: {
+    draggable
+  },
   data () {
     return {
       labelPosition: 'center',
@@ -147,6 +166,16 @@ export default {
         })
       }
     },
+    importCSV (filePath) {
+      console.log(filePath)
+      var req = new XMLHttpRequest() // HTTPでファイルを読み込むためのXMLHttpRrequestオブジェクトを生成
+      req.open('get', filePath, true) // アクセスするファイルを指定
+      req.send(null) // HTTPリクエストの発行
+
+      req.onload = function () {
+        console.log(req.responseText) // 渡されるのは読み込んだCSVデータ
+      }
+    },
     selectValue (cell) {
       if (cell.text === '') { // 最初の、入力がない場合
         cell.edit = true
@@ -186,7 +215,6 @@ export default {
 }
 
 table {
-  border: solid 1px #000000;
   border-collapse: collapse;
   table-layout: fixed;
 }
@@ -194,11 +222,12 @@ table {
 td {
   width: 20px;
   height: 30px;
-  border: solid 1px #ff0000
+  border: 1px solid black;
 }
 
 input[type="text"] {
    width: 100%; 
+   font-size: 16px;
    box-sizing: border-box;
    -webkit-box-sizing:border-box;
    -moz-box-sizing: border-box;
