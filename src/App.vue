@@ -17,11 +17,12 @@
        </tr>
     </table>
 
-    <div>
-      {{generateMdTable}}
+    <pre>
+      <code>
+        {{generateMdTable}}
+      </code>
+    </pre>
     </div>
-
-
     <!--
     <router-view></router-view>
     -->
@@ -60,7 +61,36 @@ export default {
   },
   computed: {
     generateMdTable () {
-      return this.values
+      var all = '\n'
+
+      // タイトル
+      var title = '|' // 左端
+      for (var i = 0; i < this.values[0].length; i++) {
+        title += this.values[0][i].text + '|'
+      }
+
+      all += title + '\n'
+
+      // ２段目
+      var arrangement = '|'
+      for (var j = 0; j < this.values[0].length; j++) {
+        arrangement += '-'.repeat(this.values[0][j].text.length + 1) + '--|'
+      }
+
+      all += arrangement + '\n'
+
+      // それ以降
+      for (var k = 1; k < this.values.length; k++) {
+        var row = '|'
+        for (var l = 0; l < this.values[k].length; l++) {
+          row += this.values[k][l].text + '|'
+        }
+        all += row + '\n'
+      }
+
+      console.log(all)
+      all += ''
+      return all
     }
   },
   methods: {
@@ -148,5 +178,12 @@ export default {
        box-sizing: border-box;
        -webkit-box-sizing:border-box;
        -moz-box-sizing: border-box;
+  }
+
+  pre {
+    width: 50% ;
+    border: 1px solid #000 ;
+    text-align: left;
+    white-space: pre-wrap ;
   }
 </style>
