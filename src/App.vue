@@ -222,12 +222,13 @@ table {
 td {
   width: 20px;
   height: 30px;
+  vertical-align: middle;
   border: 1px solid black;
 }
 
 input[type="text"] {
    width: 100%; 
-   font-size: 16px;
+   font-size: 15px;
    box-sizing: border-box;
    -webkit-box-sizing:border-box;
    -moz-box-sizing: border-box;
