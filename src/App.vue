@@ -21,8 +21,9 @@
        </tr>
     </table>
 
+    <el-button @click="copyToClipBoard">Copy to ClipBoard</el-button>
     <pre>
-      <code>
+      <code id="mdArea">
         {{generateMdTable}}
       </code>
     </pre>
@@ -145,6 +146,14 @@ export default {
     },
     submit (cell) {
       cell.edit = !cell.edit
+    },
+    copyToClipBoard () {
+      var target = document.querySelector('#mdArea')
+      var range = document.createRange()
+      range.selectNode(target)
+      window.getSelection().removeAllRanges()
+      window.getSelection().addRange(range)
+      document.execCommand('copy')
     }
   },
   directives: {
@@ -218,10 +227,10 @@ export default {
   }
 
   input[type="text"] {
-       width: 100%; 
-       box-sizing: border-box;
-       -webkit-box-sizing:border-box;
-       -moz-box-sizing: border-box;
+     width: 100%; 
+     box-sizing: border-box;
+     -webkit-box-sizing:border-box;
+     -moz-box-sizing: border-box;
   }
 
   pre {
@@ -229,5 +238,18 @@ export default {
     border: 1px solid #000 ;
     text-align: left;
     white-space: pre-wrap ;
+  }
+
+  #myArea::selection {
+    background-color:transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    tap-highlight-color: rgba(0, 0, 0, 0);
   }
 </style>
