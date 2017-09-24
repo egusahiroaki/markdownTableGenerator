@@ -7,6 +7,10 @@
       <el-radio-button label="right">Right</el-radio-button>
     </el-radio-group>
 
+    <div>
+      <el-input-number :min="2" size="small" v-model="rowNum" @change="changeRow"></el-input-number>
+      <el-input-number :min="2" size="small" v-model="colNum" @change="changeCol"></el-input-number>
+    </div>
 
     <table>
        <tr v-for="cells in values">
@@ -45,18 +49,21 @@ export default {
   data () {
     return {
       labelPosition: 'center',
+      beforeRowNum: 2,
+      beforeColNum: 2,
+      rowNum: 2,
+      colNum: 2,
       values: [
         [
           {text: '', edit: false},
-          {text: 'b', edit: false},
-          {text: 'c', edit: false}
+          {text: 'b', edit: false}
         ],
         [
           {text: '', edit: false},
-          {text: 'd', edit: false},
-          {text: 'e', edit: false}
+          {text: 'd', edit: false}
         ]
-      ]
+      ],
+      sizingCache: [] // サイズ変更に利用するキャッシュ
     }
   },
   computed: {
@@ -106,6 +113,30 @@ export default {
   methods: {
     changeLayout () {
       console.log(this.labelPosition)
+    },
+    changeRow (val) { // 行追加
+      this.beforeRowNum = this.rowNum
+      var newRow = []
+      if (val > this.beforeRowNum) {
+        for (var i = 0; i < parseInt(this.colNum); i++) {
+          newRow.push({text: '', edit: false})
+        }
+        this.values.push(newRow)
+      } else {
+        this.values.pop()
+      }
+    },
+    changeCol (val) { // 列追加
+      this.beforeColNum = this.colNum
+      if (val > this.beforeColNum) {
+        this.values.forEach((row) => {
+          row.push({text: '', edit: false})
+        })
+      } else {
+        this.values.forEach((row) => {
+          row.pop()
+        })
+      }
     },
     selectValue (cell) {
       if (cell.text === '') { // 最初の、入力がない場合
