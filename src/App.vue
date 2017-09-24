@@ -24,13 +24,9 @@
     <table>
       <draggable :list="values">
         <tr v-for="cells in values">
-          <td>
-            -
-          </td>
-
           <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
-            <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
+            <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
         </tr>
       </draggable>
@@ -69,18 +65,25 @@ export default {
   data () {
     return {
       labelPosition: 'center',
-      beforeRowNum: 2,
-      beforeColNum: 2,
-      rowNum: 2,
-      colNum: 2,
+      beforeRowNum: 3,
+      beforeColNum: 3,
+      rowNum: 3,
+      colNum: 3,
       values: [
         [
+          {text: '', edit: false},
           {text: '', edit: false},
           {text: 'b', edit: false}
         ],
         [
           {text: '', edit: false},
+          {text: '', edit: false},
           {text: 'd', edit: false}
+        ],
+        [
+          {text: '', edit: false},
+          {text: '', edit: false},
+          {text: 'f', edit: false}
         ]
       ],
       valuesCache: []
@@ -176,6 +179,15 @@ export default {
         console.log(req.responseText) // 渡されるのは読み込んだCSVデータ
       }
     },
+    nextCell (event) { // 次のセルへフォーカス
+      // console.log('tabba')
+      // console.log(event.target.parentNode.nextSibling.childNodes[0])
+      // event.target.parentNode.nextSibling.childNodes[0].click()
+      console.log(this.values[0][1].edit)
+      this.values[0][1].edit = false
+      console.log(this.values[0][1].edit)
+      this.values[0][2].edit = true
+    },
     selectValue (cell) {
       if (cell.text === '') { // 最初の、入力がない場合
         cell.edit = true
@@ -234,12 +246,14 @@ tr.sortable-ghost {
 
 tr.sortable-chosen:not(.sortable-ghost) {
   color: #224466;
-  background-color: #2299ff;
+/*  background-color: #2299ff;*/
+  background-color: #dddddd;
 }
 
 tr.sortable-drag {
   color: white;
   background-color: gray;
+  border: 1px dashed #aaa;
 }
 
 input[type="text"] {
