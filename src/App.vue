@@ -8,11 +8,11 @@
     </el-radio-group>
 
 
-    <table style="border: solid 1px #000000; border-collapse: collapse;">
+    <table style="border: solid 1px #000000; border-collapse: collapse; table-layout: fixed;">
        <tr v-for="cells in values">
           <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
-            <input v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
+            <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
           </td>
        </tr>
     </table>
@@ -130,5 +130,12 @@ export default {
     width: 20px;
     height: 30px;
     border: solid 1px #ff0000
+  }
+
+  input[type="text"] {
+       width: 100%; 
+       box-sizing: border-box;
+       -webkit-box-sizing:border-box;
+       -moz-box-sizing: border-box;
   }
 </style>
