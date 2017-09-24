@@ -17,6 +17,11 @@
        </tr>
     </table>
 
+    <div>
+      {{values}}
+    </div>
+
+
     <!--
     <router-view></router-view>
     -->
@@ -54,9 +59,6 @@ export default {
     }
   },
   computed: {
-    inputExist () {
-      return !this.textExist
-    }
   },
   methods: {
     selectValue (cell) {
