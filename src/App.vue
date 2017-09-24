@@ -226,6 +226,22 @@ td {
   border: 1px solid black;
 }
 
+tr.sortable-ghost {
+  color: #EAEAEA;
+  background-color: #EAEAEA;
+  border: 1px dashed #aaa;
+}
+
+tr.sortable-chosen:not(.sortable-ghost) {
+  color: #224466;
+  background-color: #2299ff;
+}
+
+tr.sortable-drag {
+  color: white;
+  background-color: gray;
+}
+
 input[type="text"] {
    width: 100%; 
    font-size: 15px;
