@@ -135,11 +135,15 @@ export default {
       this.beforeColNum = this.colNum
       if (val > this.beforeColNum) {
         this.values.forEach((row) => {
-          row.push({text: '', edit: false})
+          for (var i = 0; i < val - this.beforeColNum; i++) {
+            row.push({text: '', edit: false})
+          }
         })
       } else {
         this.values.forEach((row) => {
-          row.pop()
+          for (var j = 0; j < this.beforeColNum - val; j++) {
+            row.pop()
+          }
         })
       }
     },
