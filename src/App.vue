@@ -8,25 +8,19 @@
     </el-radio-group>
 
 
-    <el-table
-      :data="tableData"
-      border
-      style="width: 50%">
-      <el-table-column
-        prop="column1"
-        label="Column1"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="column2"
-        label="Column1"
-        width="180">
-      </el-table-column>
-      <el-table-column
-        prop="column3"
-        label="Column1">
-      </el-table-column>
-    </el-table>
+    <table @click="selectValue($event)" @keyup.enter="submit($event)" style="border: solid 1px #000000; border-collapse: collapse;">
+       <tr>
+          <td>
+            <div v-if="!textEdit" class="display" v-text="currentEdittingCellText" @click="textEdit = true"></div>
+            <input v-if="textEdit" type="text" v-model="currentEdittingCellText" v-on:blur="textEdit = false" ref="textInput" v-focus />
+          </td>
+          <td>1</td>
+          <td>1</td>
+       </tr>
+       <tr>
+          <td>2</td><td>2</td><td>2</td>
+       </tr>
+    </table>
 
     <!--
     <router-view></router-view>
@@ -35,29 +29,42 @@
 </template>
 
 <script>
+import Vue from 'vue'
+
+const focus = {
+  inserted (el) {
+    Vue.nextTick(function () {
+      el.focus()
+    })
+  }
+}
+
 export default {
   name: 'app',
   data () {
     return {
       labelPosition: 'right',
-      tableData: [{
-        column1: '',
-        column2: '',
-        column3: ''
-      }, {
-        column1: '',
-        column2: '',
-        column3: ''
-      }, {
-        column1: '',
-        column2: '',
-        column3: ''
-      }]
+      currentEdittingCellText: '',
+      textEdit: false
+    }
+  },
+  computed: {
+    inputExist () {
+      return !this.textExist
     }
   },
   methods: {
+    selectValue (event) {
+      if (this.currentEdittingCellText.length === 0) { // 最初の、入力がない場合
+        this.textEdit = true
+      }
+    },
+    submit () {
+      this.textEdit = !this.textEdit
+    }
   },
   directives: {
+    focus
   }
 }
 
@@ -114,19 +121,9 @@ export default {
       clear: both
   }
 
-    .el-carousel__item h3 {
-    color: #475669;
-    font-size: 14px;
-    opacity: 0.75;
-    line-height: 150px;
-    margin: 0;
-  }
-
-  .el-carousel__item:nth-child(2n) {
-    background-color: #99a9bf;
-  }
-
-  .el-carousel__item:nth-child(2n+1) {
-    background-color: #d3dce6;
+  td {
+    width: 20px;
+    height: 30px;
+    border: solid 1px #ff0000
   }
 </style>
