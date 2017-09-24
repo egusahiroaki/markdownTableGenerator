@@ -8,14 +8,12 @@
     </el-radio-group>
 
 
-    <table @click="selectValue($event)" @keyup.enter="submit($event)" style="border: solid 1px #000000; border-collapse: collapse;">
+    <table style="border: solid 1px #000000; border-collapse: collapse;">
        <tr>
-          <td>
-            <div v-if="!textEdit" class="display" v-text="currentEdittingCellText" @click="textEdit = true"></div>
-            <input v-if="textEdit" type="text" v-model="currentEdittingCellText" v-on:blur="textEdit = false" ref="textInput" v-focus />
+          <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
+            <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
+            <input v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus />
           </td>
-          <td>1</td>
-          <td>1</td>
        </tr>
        <tr>
           <td>2</td><td>2</td><td>2</td>
@@ -45,7 +43,12 @@ export default {
     return {
       labelPosition: 'right',
       currentEdittingCellText: '',
-      textEdit: false
+      textEdit: false,
+      cells: [
+        {text: '', edit: false},
+        {text: 'b', edit: false},
+        {text: 'c', edit: false}
+      ]
     }
   },
   computed: {
@@ -54,13 +57,21 @@ export default {
     }
   },
   methods: {
-    selectValue (event) {
-      if (this.currentEdittingCellText.length === 0) { // 最初の、入力がない場合
-        this.textEdit = true
+    selectValue (cell) {
+      // console.log(event.target.getElementsByClassName('display')[0].innerHTML === '')
+      // console.log(event.target.getElementsByClassName('display')[0].innerHTML)
+      // if (event.target.getElementsByClassName('display')[0].innerHTML === '') { // 最初の、入力がない場合
+      //   this. = true
+      // }
+
+      if (cell.text === '') { // 最初の、入力がない場合
+        cell.edit = true
       }
+
+      console.log(cell.edit)
     },
-    submit () {
-      this.textEdit = !this.textEdit
+    submit (cell) {
+      cell.edit = !cell.edit
     }
   },
   directives: {
