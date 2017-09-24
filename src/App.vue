@@ -18,7 +18,7 @@
     </table>
 
     <div>
-      {{values}}
+      {{generateMdTable}}
     </div>
 
 
@@ -59,6 +59,9 @@ export default {
     }
   },
   computed: {
+    generateMdTable () {
+      return this.values
+    }
   },
   methods: {
     selectValue (cell) {
