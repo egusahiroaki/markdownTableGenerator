@@ -76,7 +76,7 @@ export default {
       for (var j = 0; j < this.values[0].length; j++) {
         switch (this.labelPosition) {
           case 'left':
-            arrangement += ':'
+            arrangement += j > 0 ? ':' : ''
             arrangement += '-'.repeat(this.values[0][j].text.length + 1) + '--|'
             break
           case 'center':
