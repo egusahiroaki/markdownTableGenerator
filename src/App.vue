@@ -8,7 +8,7 @@
     </el-radio-group>
 
 
-    <table style="border: solid 1px #000000; border-collapse: collapse; table-layout: fixed;">
+    <table>
        <tr v-for="cells in values">
           <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
@@ -124,6 +124,12 @@ export default {
   
   .clearfix:after {
       clear: both
+  }
+
+  table {
+    border: solid 1px #000000;
+    border-collapse: collapse;
+    table-layout: fixed;
   }
 
   td {
