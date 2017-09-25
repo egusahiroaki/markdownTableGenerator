@@ -41,12 +41,13 @@
       </draggable>
     </table>
 
-    <el-button @click="copyToClipBoard" type="primary" icon="document">Copy to ClipBoard</el-button>
-    <pre>
-      <code id="mdArea">
-        {{generateMdTable}}
-      </code>
-    </pre>
+    <el-button @click="copyToClipBoard" type="primary" icon="document" style="margin-bottom:20px;">Copy to ClipBoard</el-button>
+    <div>
+      <pre>
+        <code id="mdArea">
+          {{generateMdTable}}
+        </code>
+      </pre>
     </div>
     <!--
     <router-view></router-view>
@@ -246,6 +247,7 @@ export default {
 table {
   border-collapse: collapse;
   table-layout: fixed;
+  margin: 30px auto;
 }
 
 td {
@@ -287,9 +289,13 @@ input[type="text"] {
 
 pre {
   width: 50% ;
-  border: 1px solid #000 ;
   text-align: left;
   white-space: pre-wrap ;
+  margin: auto;
+}
+
+code {
+
 }
 
 #myArea::selection {
