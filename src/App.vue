@@ -29,6 +29,8 @@
     <table>
       <draggable :list="values">
         <tr v-for="cells in values">
+          <td class="outline">
+          </td>
           <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
             <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
@@ -241,6 +243,10 @@ td {
   height: 30px;
   vertical-align: middle;
   border: 1px solid black;
+}
+
+td.outline {
+  background: #f2f2f2;
 }
 
 tr.sortable-ghost {
