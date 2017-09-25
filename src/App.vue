@@ -15,9 +15,10 @@
     <div>
       <el-input-number :min="2" size="small" v-model="rowNum" @change="changeRow"></el-input-number>
       <el-input-number :min="2" size="small" v-model="colNum" @change="changeCol"></el-input-number>
+      <el-button @click="clearTable" type="small" >Clear Table</el-button>
     </div>
 
-    <el-button @click="clearTable" type="small" >Clear Table</el-button>
+
 
 <!-- 
     <el-upload
