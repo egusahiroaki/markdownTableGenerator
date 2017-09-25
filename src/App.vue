@@ -17,6 +17,8 @@
       <el-input-number :min="2" size="small" v-model="colNum" @change="changeCol"></el-input-number>
     </div>
 
+    <el-button @click="clearTable" type="primary" >Clear Table</el-button>
+
 <!-- 
     <el-upload
       class="upload-demo"
@@ -185,6 +187,15 @@ export default {
       req.onload = function () {
         console.log(req.responseText) // 渡されるのは読み込んだCSVデータ
       }
+    },
+    clearTable () {
+      this.values.forEach((row) => {
+        console.log(row)
+        row.map((cell) => {
+          cell.text = ''
+          cell.edit = false
+        })
+      })
     },
     nextCell (event) { // 次のセルへフォーカス
       // console.log('tabba')
