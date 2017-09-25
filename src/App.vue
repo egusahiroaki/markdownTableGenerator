@@ -248,7 +248,6 @@ export default {
 table {
   border-collapse: collapse;
   table-layout: fixed;
-  margin: 30px auto;
 }
 
 td {
