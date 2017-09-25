@@ -2,7 +2,7 @@
   <div id="app">
 
     <h1>
-      MarkDown Table Generator
+      Markdown Table Generator
     </h1>
 
 
