@@ -1,6 +1,11 @@
 <template>
   <div id="app">
 
+    <h1>
+      MarkDown Table Generator
+    </h1>
+
+
     <el-radio-group v-model="labelPosition" size="small" style="margin-bottom:10px;" @change="changeLayout">
       <el-radio-button label="left">Left</el-radio-button>
       <el-radio-button label="center">Center</el-radio-button>
