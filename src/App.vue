@@ -78,17 +78,17 @@ export default {
         [
           {text: '', edit: false},
           {text: '', edit: false},
-          {text: 'b', edit: false}
+          {text: '', edit: false}
         ],
         [
           {text: '', edit: false},
           {text: '', edit: false},
-          {text: 'd', edit: false}
+          {text: '', edit: false}
         ],
         [
           {text: '', edit: false},
           {text: '', edit: false},
-          {text: 'f', edit: false}
+          {text: '', edit: false}
         ]
       ],
       valuesCache: []
