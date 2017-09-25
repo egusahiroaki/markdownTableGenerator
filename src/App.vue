@@ -17,7 +17,7 @@
       <el-input-number :min="2" size="small" v-model="colNum" @change="changeCol"></el-input-number>
     </div>
 
-    <el-button @click="clearTable" type="primary" >Clear Table</el-button>
+    <el-button @click="clearTable" type="small" >Clear Table</el-button>
 
 <!-- 
     <el-upload
@@ -190,7 +190,6 @@ export default {
     },
     clearTable () {
       this.values.forEach((row) => {
-        console.log(row)
         row.map((cell) => {
           cell.text = ''
           cell.edit = false
