@@ -28,13 +28,12 @@
       <div slot="tip" class="el-upload__tip">csv files with a size less than 500kb</div>
     </el-upload>
  -->
-
     <table>
       <draggable :list="values">
         <tr v-for="(cells, i) in values">
           <td class="outline">
           </td>
-          <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)">
+          <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }" >
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
             <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
@@ -83,21 +82,22 @@ export default {
       curSelectRowNum: 0,
       curSelectColNum: 0,
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
+      isSelected: false,
       values: [
         [
-          {text: '', edit: false},
-          {text: '', edit: false},
-          {text: '', edit: false}
+          {text: '', edit: false, select: false},
+          {text: '', edit: false, select: false},
+          {text: '', edit: false, select: false}
         ],
         [
-          {text: '', edit: false},
-          {text: '', edit: false},
-          {text: '', edit: false}
+          {text: '', edit: false, select: false},
+          {text: '', edit: false, select: false},
+          {text: '', edit: false, select: false}
         ],
         [
-          {text: '', edit: false},
-          {text: '', edit: false},
-          {text: '', edit: false}
+          {text: '', edit: false, select: false},
+          {text: '', edit: false, select: false},
+          {text: '', edit: false, select: false}
         ]
       ],
       valuesCache: []
@@ -210,18 +210,20 @@ export default {
     selectValue (cell, i, j) {
       if ((i !== this.curSelectRowNum || j !== this.curSelectColNum)) { // 選択中だが、別のcellを選んだ場合
         this.cellSelectStatus = 0
+        this.values[this.curSelectRowNum][this.curSelectColNum].select = false // もともと選択してたものは色を戻す
       }
 
       if (this.cellSelectStatus === 0) { // 未選択の時には、curSelectRowNum, this.curSelectColNumに値を入れて保持
         this.curSelectRowNum = i
         this.curSelectColNum = j
         this.cellSelectStatus++ // 1にする
+        cell.select = true
         return
       }
 
       if (i === this.curSelectRowNum && j === this.curSelectColNum) { // どのcellか選択中
         this.cellSelectStatus++ // 2にする
-        if (cell.text === '' && this.cellSelectStatus === 2) { // 最初の、入力がない場合
+        if (cell.text === '' && this.cellSelectStatus === 2) { // 編集可能にする
           cell.edit = true
         }
       } else {
@@ -270,7 +272,12 @@ td {
   width: 20px;
   height: 30px;
   vertical-align: middle;
+  background-color: white;
   border: 1px solid black;
+}
+
+td.active {
+  background-color: yellow;
 }
 
 td.outline {
