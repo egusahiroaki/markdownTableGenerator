@@ -277,7 +277,7 @@ td {
 }
 
 td.active {
-  background-color: yellow;
+  background-color: #a8d0ef;
 }
 
 td.outline {
