@@ -181,6 +181,11 @@ export default {
           }
         })
       } else {  // 列を減らす場合
+        if (this.curSelectColNum === val) { // 現在選択中のcellが表示から消える場合には、右端に選択中を合わせる
+          this.curSelectColNum -= 1
+          this.values[this.curSelectRowNum][val - 1].select = true
+        }
+
         this.values.forEach((row) => {
           for (var j = 0; j < this.beforeColNum - val; j++) {
             row.pop()
