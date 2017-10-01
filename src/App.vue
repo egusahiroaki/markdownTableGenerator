@@ -18,7 +18,10 @@
       <el-button @click="clearTable" type="small" >Clear Table</el-button>
     </div>
 
-
+    <div>
+      <el-button @click="insertColumnLeft" type="small" >Insert Column to the Left</el-button>
+      <el-button @click="insertColumnRight" type="small" >Insert Column to the Left</el-button>
+    </div>
 
 <!-- 
     <el-upload
@@ -200,6 +203,12 @@ export default {
           cell.edit = false
         })
       })
+    },
+    insertColumnLeft () {
+
+    },
+    insertColumnRight () {
+
     },
     nextCell (event) { // 次のセルへフォーカス
       console.log(this.values[0][1].edit)
