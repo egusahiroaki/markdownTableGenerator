@@ -20,7 +20,7 @@
 
     <div>
       <el-button @click="insertColumnLeft" type="small" >Insert Column to the Left</el-button>
-      <el-button @click="insertColumnRight" type="small" >Insert Column to the Left</el-button>
+      <el-button @click="insertColumnRight" type="small" >Insert Column to the Right</el-button>
     </div>
 
 <!-- 
@@ -82,8 +82,8 @@ export default {
       beforeColNum: 3,
       rowNum: 3,
       colNum: 3,
-      curSelectRowNum: 0,
-      curSelectColNum: 0,
+      curSelectRowNum: 0, // -1は選択してない状態とする
+      curSelectColNum: 0, // -1は選択してない状態とする
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
       isSelected: false,
       values: [
@@ -160,7 +160,7 @@ export default {
         for (var i = 0; i < val - this.beforeRowNum; i++) {
           var newRow = []
           for (var j = 0; j < this.colNum; j++) {
-            newRow.push({text: '', edit: false})
+            newRow.push({text: '', edit: false, select: false})
           }
           this.values.push(newRow)
         }
@@ -175,7 +175,7 @@ export default {
       if (val > this.beforeColNum) {
         this.values.forEach((row) => {
           for (var i = 0; i < val - this.beforeColNum; i++) {
-            row.push({text: '', edit: false})
+            row.push({text: '', edit: false, select: false})
           }
         })
       } else {
@@ -205,16 +205,20 @@ export default {
       })
     },
     insertColumnLeft () {
-
+      this.values.forEach((row) => {
+        row.splice(this.curSelectColNum - 1, 0, {text: '', edit: false, select: false})
+      })
     },
     insertColumnRight () {
-
+      this.values.forEach((row) => {
+        row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, select: false})
+      })
     },
     nextCell (event) { // 次のセルへフォーカス
-      console.log(this.values[0][1].edit)
-      this.values[0][1].edit = false
-      console.log(this.values[0][1].edit)
-      this.values[0][2].edit = true
+      // console.log(this.values[0][1].edit)
+      // this.values[0][1].edit = false
+      // console.log(this.values[0][1].edit)
+      // this.values[0][2].edit = true
     },
     selectValue (cell, i, j) {
       if ((i !== this.curSelectRowNum || j !== this.curSelectColNum)) { // 選択中だが、別のcellを選んだ場合
