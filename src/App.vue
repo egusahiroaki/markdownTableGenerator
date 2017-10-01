@@ -33,6 +33,13 @@
  -->
     <table>
       <!-- <draggable :list="values"> -->
+        <tr>
+          <td class="outline header">
+          </td>
+          <td v-for="r in rowNum"  class="outline header">
+          </td>
+        </tr>
+
         <tr v-for="(cells, i) in currentValue">
           <td class="outline">
           </td>
@@ -295,6 +302,10 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+}
+
+td.header {
+  height: 10px;
 }
 
 table {
