@@ -31,10 +31,10 @@
 
     <table>
       <draggable :list="values">
-        <tr v-for="cells in values">
+        <tr v-for="(cells, i) in values">
           <td class="outline">
           </td>
-          <td v-for="cell in cells" @click="selectValue(cell)" @keyup.enter="submit(cell)">
+          <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)">
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
             <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
@@ -80,6 +80,9 @@ export default {
       beforeColNum: 3,
       rowNum: 3,
       colNum: 3,
+      curSelectRowNum: 0,
+      curSelectColNum: 0,
+      cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
       values: [
         [
           {text: '', edit: false},
@@ -204,9 +207,25 @@ export default {
       console.log(this.values[0][1].edit)
       this.values[0][2].edit = true
     },
-    selectValue (cell) {
-      if (cell.text === '') { // 最初の、入力がない場合
-        cell.edit = true
+    selectValue (cell, i, j) {
+      if ((i !== this.curSelectRowNum || j !== this.curSelectColNum)) { // 選択中だが、別のcellを選んだ場合
+        this.cellSelectStatus = 0
+      }
+
+      if (this.cellSelectStatus === 0) { // 未選択の時には、curSelectRowNum, this.curSelectColNumに値を入れて保持
+        this.curSelectRowNum = i
+        this.curSelectColNum = j
+        this.cellSelectStatus++ // 1にする
+        return
+      }
+
+      if (i === this.curSelectRowNum && j === this.curSelectColNum) { // どのcellか選択中
+        this.cellSelectStatus++ // 2にする
+        if (cell.text === '' && this.cellSelectStatus === 2) { // 最初の、入力がない場合
+          cell.edit = true
+        }
+      } else {
+        this.cellSelectStatus = 0
       }
     },
     submit (cell) {
