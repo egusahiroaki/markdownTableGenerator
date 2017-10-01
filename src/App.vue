@@ -37,8 +37,9 @@
           <td class="outline">
           </td>
           <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }" >
+
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
-            <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
+            <input @input="inputCell" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
         </tr>
       <!-- </draggable> -->
@@ -257,6 +258,9 @@ export default {
       } else {
         this.cellSelectStatus = 0
       }
+    },
+    inputCell ({type, target}) { // textの入力を取得
+      target.style.width = ((target.value.length + 1) * 8) + 'px'
     },
     submit (cell) {
       cell.edit = !cell.edit
