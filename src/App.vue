@@ -33,7 +33,7 @@
  -->
     <table>
       <!-- <draggable :list="values"> -->
-        <tr v-for="(cells, i) in values">
+        <tr v-for="(cells, i) in currentValue">
           <td class="outline">
           </td>
           <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }" >
@@ -70,8 +70,6 @@ const focus = {
   }
 }
 
-const DEFAULT_CELL = {text: '', edit: false, select: false}
-
 export default {
   name: 'app',
   components: {
@@ -80,14 +78,13 @@ export default {
   data () {
     return {
       labelPosition: 'center',
-      beforeRowNum: 3,
-      beforeColNum: 3,
+      beforeRowNum: 3, // 増減に対応するために必要
+      beforeColNum: 3, // 増減に対応するために必要
       rowNum: 3,
       colNum: 3,
       curSelectRowNum: 0, // -1は選択してない状態とする
       curSelectColNum: 0, // -1は選択してない状態とする
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
-      isSelected: false,
       values: [
         [
           {text: '', edit: false, select: false},
@@ -109,6 +106,9 @@ export default {
     }
   },
   computed: {
+    currentValue () {
+      return this.values
+    },
     generateMdTable () {
       var all = '\n'
 
@@ -162,7 +162,7 @@ export default {
         for (var i = 0; i < val - this.beforeRowNum; i++) {
           var newRow = []
           for (var j = 0; j < this.colNum; j++) {
-            newRow.push(DEFAULT_CELL)
+            newRow.push({text: '', edit: false, select: false})
           }
           this.values.push(newRow)
         }
@@ -177,7 +177,7 @@ export default {
       if (val > this.beforeColNum) {
         this.values.forEach((row) => {
           for (var i = 0; i < val - this.beforeColNum; i++) {
-            row.push(DEFAULT_CELL)
+            row.push({text: '', edit: false, select: false})
           }
         })
       } else {
@@ -209,15 +209,16 @@ export default {
     insertColumnLeft () {
       this.values.forEach((row) => {
         if (this.curSelectColNum === 0) { // 左端を選択しているときは
-          row.unshift(DEFAULT_CELL)
+          row.unshift({text: '', edit: false, select: false})
         } else {
-          row.splice(this.curSelectColNum - 1, 0, DEFAULT_CELL)
+          row.splice(this.curSelectColNum, 0, {text: '', edit: false, select: false})
         }
       })
+      this.curSelectColNum++ // 追加によるselectの位置の整合性をとる
     },
     insertColumnRight () {
       this.values.forEach((row) => {
-        row.splice(this.curSelectColNum + 1, 0, DEFAULT_CELL)
+        row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, select: false})
       })
     },
     nextCell (event) { // 次のセルへフォーカス
