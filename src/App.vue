@@ -199,9 +199,6 @@ export default {
       })
     },
     nextCell (event) { // 次のセルへフォーカス
-      // console.log('tabba')
-      // console.log(event.target.parentNode.nextSibling.childNodes[0])
-      // event.target.parentNode.nextSibling.childNodes[0].click()
       console.log(this.values[0][1].edit)
       this.values[0][1].edit = false
       console.log(this.values[0][1].edit)
