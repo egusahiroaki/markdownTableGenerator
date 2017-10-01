@@ -221,7 +221,9 @@ export default {
       // this.values[0][2].edit = true
     },
     selectValue (cell, i, j) {
+      console.log('this.cellSelectStatus: ' + this.cellSelectStatus)
       if ((i !== this.curSelectRowNum || j !== this.curSelectColNum)) { // 選択中だが、別のcellを選んだ場合
+        console.log('別のcell選択')
         this.cellSelectStatus = 0
         this.values[this.curSelectRowNum][this.curSelectColNum].select = false // もともと選択してたものは色を戻す
       }
@@ -231,12 +233,14 @@ export default {
         this.curSelectColNum = j
         this.cellSelectStatus++ // 1にする
         cell.select = true
+        cell.edit = false
         return
       }
 
       if (i === this.curSelectRowNum && j === this.curSelectColNum) { // どのcellか選択中
         this.cellSelectStatus++ // 2にする
         if (cell.text === '' && this.cellSelectStatus === 2) { // 編集可能にする
+          console.log('編集可能')
           cell.edit = true
         }
       } else {
