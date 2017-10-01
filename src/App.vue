@@ -36,7 +36,7 @@
         <tr>
           <td class="outline header">
           </td>
-          <td v-for="r in rowNum"  class="outline header">
+          <td v-for="r in currentRowNum"  class="outline header">
           </td>
         </tr>
 
@@ -117,6 +117,9 @@ export default {
     currentValue () {
       return this.values
     },
+    currentRowNum () {
+      return this.values[0]
+    },
     generateMdTable () {
       var all = '\n'
 
@@ -174,10 +177,12 @@ export default {
           }
           this.values.push(newRow)
         }
+        this.rowNum++
       } else {
         for (var k = 0; k < this.beforeRowNum - val; k++) {
           this.values.pop()
         }
+        this.rowNum--
       }
     },
     changeCol (val) { // 列追加
