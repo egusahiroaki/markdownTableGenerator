@@ -260,7 +260,9 @@ export default {
       }
     },
     inputCell ({type, target}) { // textの入力を取得
-      target.style.width = ((target.value.length + 1) * 8) + 'px'
+      var width = (target.value.length + 1) * 8 + 'px'
+      target.style.width = width
+      target.parentNode.style.width = width
     },
     submit (cell) {
       cell.edit = !cell.edit
