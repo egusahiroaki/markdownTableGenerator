@@ -32,7 +32,7 @@
     </el-upload>
  -->
     <table>
-      <draggable :list="values">
+      <!-- <draggable :list="values"> -->
         <tr v-for="(cells, i) in values">
           <td class="outline">
           </td>
@@ -41,7 +41,7 @@
             <input onkeypress="this.style.width = ((this.value.length + 1) * 8) + 'px';" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
         </tr>
-      </draggable>
+      <!-- </draggable> -->
     </table>
 
     <el-button @click="copyToClipBoard" type="primary" icon="document" style="margin-bottom:20px;">Copy to ClipBoard</el-button>
