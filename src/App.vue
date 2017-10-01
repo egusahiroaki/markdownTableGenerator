@@ -70,6 +70,8 @@ const focus = {
   }
 }
 
+const DEFAULT_CELL = {text: '', edit: false, select: false}
+
 export default {
   name: 'app',
   components: {
@@ -160,7 +162,7 @@ export default {
         for (var i = 0; i < val - this.beforeRowNum; i++) {
           var newRow = []
           for (var j = 0; j < this.colNum; j++) {
-            newRow.push({text: '', edit: false, select: false})
+            newRow.push(DEFAULT_CELL)
           }
           this.values.push(newRow)
         }
@@ -175,7 +177,7 @@ export default {
       if (val > this.beforeColNum) {
         this.values.forEach((row) => {
           for (var i = 0; i < val - this.beforeColNum; i++) {
-            row.push({text: '', edit: false, select: false})
+            row.push(DEFAULT_CELL)
           }
         })
       } else {
@@ -207,15 +209,15 @@ export default {
     insertColumnLeft () {
       this.values.forEach((row) => {
         if (this.curSelectColNum === 0) { // 左端を選択しているときは
-          row.unshift({text: '', edit: false, select: false})
+          row.unshift(DEFAULT_CELL)
         } else {
-          row.splice(this.curSelectColNum - 1, 0, {text: '', edit: false, select: false})
+          row.splice(this.curSelectColNum - 1, 0, DEFAULT_CELL)
         }
       })
     },
     insertColumnRight () {
       this.values.forEach((row) => {
-        row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, select: false})
+        row.splice(this.curSelectColNum + 1, 0, DEFAULT_CELL)
       })
     },
     nextCell (event) { // 次のセルへフォーカス
