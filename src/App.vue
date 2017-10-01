@@ -174,13 +174,13 @@ export default {
     },
     changeCol (val) { // 列追加
       this.beforeColNum = this.colNum
-      if (val > this.beforeColNum) {
+      if (val > this.beforeColNum) { // 列を増やす場合
         this.values.forEach((row) => {
           for (var i = 0; i < val - this.beforeColNum; i++) {
             row.push({text: '', edit: false, select: false})
           }
         })
-      } else {
+      } else {  // 列を減らす場合
         this.values.forEach((row) => {
           for (var j = 0; j < this.beforeColNum - val; j++) {
             row.pop()
