@@ -215,11 +215,13 @@ export default {
         }
       })
       this.curSelectColNum++ // 追加によるselectの位置の整合性をとる
+      this.colNum++
     },
     insertColumnRight () {
       this.values.forEach((row) => {
         row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, select: false})
       })
+      this.colNum++
     },
     nextCell (event) { // 次のセルへフォーカス
       // console.log(this.values[0][1].edit)
