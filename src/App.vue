@@ -46,7 +46,7 @@
           <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }"  :style="{ 'width': columnWidths[j] + 'px' }">
 
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
-            <input @input="inputCell" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
+            <input @input="inputCell($event, i, j)" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
         </tr>
       <!-- </draggable> -->
@@ -276,10 +276,11 @@ export default {
         this.cellSelectStatus = 0
       }
     },
-    inputCell ({type, target}) { // textの入力を取得し、横幅を動的に変更 + dataのwidthを更新
-      var width = (target.value.length + 1) * 8 + 'px'
-      target.style.width = width
-      target.parentNode.style.width = width
+    inputCell (e, i, j) { // textの入力を取得し、横幅を動的に変更 + dataのwidthを更新
+      var width = (e.target.value.length + 1) * 8 + 'px'
+      e.target.style.width = width
+      e.target.parentNode.style.width = width
+      console.log('i: ' + i + ', j: ' + j)
     },
     submit (cell) {
       cell.edit = !cell.edit
