@@ -36,7 +36,8 @@
         <tr>
           <td class="outline header">
           </td>
-          <td v-for="r in currentRowNum"  class="outline header">
+          <td v-for="(r, i) in currentRowNum"  class="outline header">
+            {{ i | convertAlphabet }}
           </td>
         </tr>
 
@@ -111,6 +112,19 @@ export default {
         ]
       ],
       valuesCache: []
+    }
+  },
+  filters: {
+    convertAlphabet (num) { // [TODO] この関数は描画の最初にだけ実行されるプロパティに移動させたい
+      var r = []
+      for (var i = 65; i <= 90; i++) {
+        r.push(String.fromCharCode(i))
+      }
+
+      for (var j = 97; j <= 122; j++) {
+        r.push(String.fromCharCode(j))
+      }
+      return r[num]
     }
   },
   computed: {
@@ -322,7 +336,8 @@ export default {
 }
 
 td.header {
-  height: 10px;
+  font-size: 11px;
+  height: 15px;
 }
 
 table {
