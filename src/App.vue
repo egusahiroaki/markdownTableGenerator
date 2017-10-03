@@ -91,8 +91,8 @@ export default {
       beforeColNum: 3, // 増減に対応するために必要
       rowNum: 3,
       colNum: 3,
-      curSelectRowNum: 0, // -1は選択してない状態とする
-      curSelectColNum: 0, // -1は選択してない状態とする
+      curSelectRowNum: 0, // 選択位置
+      curSelectColNum: 0, // 選択位置
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
       values: [
         [
