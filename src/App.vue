@@ -43,7 +43,7 @@
         <tr v-for="(cells, i) in currentValue">
           <td class="outline">
           </td>
-          <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }" >
+          <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }"  :style="{ 'width': columnWidths[j] + 'px' }">
 
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
             <input @input="inputCell" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
@@ -119,6 +119,11 @@ export default {
     },
     currentRowNum () {
       return this.values[0]
+    },
+    columnWidths () { // cellの横幅の配列
+      return this.values.map((r) => {
+        return r[0].width // [TODO] widthは各cellに持たせ流状態から、width: , contents:[] 等のデータ構造にする
+      })
     },
     generateMdTable () {
       var all = '\n'
