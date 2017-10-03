@@ -95,19 +95,19 @@ export default {
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
       values: [
         [
-          {text: '', edit: false, select: false},
-          {text: '', edit: false, select: false},
-          {text: '', edit: false, select: false}
+          {text: '', edit: false, width: 20, select: false},
+          {text: '', edit: false, width: 20, select: false},
+          {text: '', edit: false, width: 20, select: false}
         ],
         [
-          {text: '', edit: false, select: false},
-          {text: '', edit: false, select: false},
-          {text: '', edit: false, select: false}
+          {text: '', edit: false, width: 20, select: false},
+          {text: '', edit: false, width: 20, select: false},
+          {text: '', edit: false, width: 20, select: false}
         ],
         [
-          {text: '', edit: false, select: false},
-          {text: '', edit: false, select: false},
-          {text: '', edit: false, select: false}
+          {text: '', edit: false, width: 20, select: false},
+          {text: '', edit: false, width: 20, select: false},
+          {text: '', edit: false, width: 20, select: false}
         ]
       ],
       valuesCache: []
@@ -173,7 +173,7 @@ export default {
         for (var i = 0; i < val - this.beforeRowNum; i++) {
           var newRow = []
           for (var j = 0; j < this.colNum; j++) {
-            newRow.push({text: '', edit: false, select: false})
+            newRow.push({text: '', edit: false, width: 20, select: false})
           }
           this.values.push(newRow)
         }
@@ -190,7 +190,7 @@ export default {
       if (val > this.beforeColNum) { // 列を増やす場合
         this.values.forEach((row) => {
           for (var i = 0; i < val - this.beforeColNum; i++) {
-            row.push({text: '', edit: false, select: false})
+            row.push({text: '', edit: false, width: 20, select: false})
           }
         })
       } else {  // 列を減らす場合
@@ -227,9 +227,9 @@ export default {
     insertColumnLeft () {
       this.values.forEach((row) => {
         if (this.curSelectColNum === 0) { // 左端を選択しているときは
-          row.unshift({text: '', edit: false, select: false})
+          row.unshift({text: '', edit: false, width: 20, select: false})
         } else {
-          row.splice(this.curSelectColNum, 0, {text: '', edit: false, select: false})
+          row.splice(this.curSelectColNum, 0, {text: '', edit: false, width: 20, select: false})
         }
       })
       this.curSelectColNum++ // 追加によるselectの位置の整合性をとる
@@ -237,7 +237,7 @@ export default {
     },
     insertColumnRight () {
       this.values.forEach((row) => {
-        row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, select: false})
+        row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, width: 20, select: false})
       })
       this.colNum++
     },
