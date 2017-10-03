@@ -121,8 +121,8 @@ export default {
       return this.values[0]
     },
     columnWidths () { // cellの横幅の配列
-      return this.values.map((r) => {
-        return r[0].width // [TODO] widthは各cellに持たせ流状態から、width: , contents:[] 等のデータ構造にする
+      return this.values[0].map((r) => { // [TODO] widthは各cellに持たせる状態から、width: , contents:[] 等のデータ構造にする
+        return r.width
       })
     },
     generateMdTable () {
@@ -277,10 +277,16 @@ export default {
       }
     },
     inputCell (e, i, j) { // textの入力を取得し、横幅を動的に変更 + dataのwidthを更新
-      var width = (e.target.value.length + 1) * 8 + 'px'
+      var w = (e.target.value.length + 1) * 8
+      var width = w + 'px'
       e.target.style.width = width
       e.target.parentNode.style.width = width
-      console.log('i: ' + i + ', j: ' + j)
+      // console.log('i: ' + i + ', j: ' + j)
+      this.values[0].map((v, index) => {
+        if (index === j) {
+          v.width = w
+        }
+      })
     },
     submit (cell) {
       cell.edit = !cell.edit
