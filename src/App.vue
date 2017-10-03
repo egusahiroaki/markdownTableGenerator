@@ -186,9 +186,9 @@ export default {
     changeLayout () {
       console.log(this.labelPosition)
     },
-    changeRow (val) { // 行追加
+    changeRow (val) { // 行増減
       this.beforeRowNum = this.rowNum
-      if (val > this.beforeRowNum) {
+      if (val > this.beforeRowNum) { // 増やす場合
         for (var i = 0; i < val - this.beforeRowNum; i++) {
           var newRow = []
           for (var j = 0; j < this.colNum; j++) {
@@ -197,10 +197,17 @@ export default {
           this.values.push(newRow)
         }
         this.rowNum++
-      } else {
+      } else { // 減らす場合
         for (var k = 0; k < this.beforeRowNum - val; k++) {
           this.values.pop()
         }
+
+        // 一つずつ減らしているときに、選択中を最下端に移動する or 数値そのものを変更して、現在の選択位置がなくなってしまった場合の対応
+        if (this.curSelectRowNum >= val) {
+          this.values[val - 1][this.curSelectColNum].select = true
+          this.curSelectRowNum = val - 1
+        }
+
         this.rowNum--
       }
     },
@@ -223,6 +230,11 @@ export default {
             row.pop()
           }
         })
+      }
+
+      // 数値そのものを変更して、現在の選択位置がなくなってしまった場合の対応
+      if (val < this.curSelectColNum) {
+        this.values[this.curSelectRowNum][val].select = true
       }
     },
     importCSV (filePath) {
