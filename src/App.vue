@@ -276,7 +276,7 @@ export default {
         this.cellSelectStatus = 0
       }
     },
-    inputCell ({type, target}) { // textの入力を取得
+    inputCell ({type, target}) { // textの入力を取得し、横幅を動的に変更 + dataのwidthを更新
       var width = (target.value.length + 1) * 8 + 'px'
       target.style.width = width
       target.parentNode.style.width = width
