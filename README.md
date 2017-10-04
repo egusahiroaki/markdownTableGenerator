@@ -1,6 +1,8 @@
-# egusahiroaki
+# Markdown Table Generator
 
-Markdown Table Generator
+This site makes you to create markdown table.
+
+[Site](https://egusahiroaki.github.io/markdownTableGenerator/)
 
 ## Build Setup
 
@@ -18,5 +20,5 @@ npm run build
 npm run build --report
 ```
 
-Copyright (c) 2017 Hiroaki Egusa
+Copyright (c) 2017 Hiroaki Egusa  
 Released under the MIT license
