@@ -281,7 +281,12 @@ export default {
       this.rowNum++
     },
     insertBelow () { // 選択中のcellの下に列を追加
-
+      var newRow = []
+      for (var i = 0; i < this.colNum; i++) {
+        newRow.push({text: '', edit: false, width: 20, select: false})
+      }
+      this.values.splice(this.selectY + 1, 0, newRow)
+      this.rowNum++
     },
     nextCell (event) { // 次のセルへフォーカス
       // console.log(this.values[0][1].edit)
