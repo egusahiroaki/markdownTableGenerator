@@ -271,10 +271,16 @@ export default {
       })
       this.colNum++
     },
-    insertAbove () {
-
+    insertAbove () { // 選択中のcellの上に列を追加
+      var newRow = []
+      for (var i = 0; i < this.colNum; i++) {
+        newRow.push({text: '', edit: false, width: 20, select: false})
+      }
+      this.values.splice(this.selectY, 0, newRow)
+      this.selectY++
+      this.rowNum++
     },
-    insertBelow () {
+    insertBelow () { // 選択中のcellの下に列を追加
 
     },
     nextCell (event) { // 次のセルへフォーカス
