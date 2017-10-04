@@ -52,7 +52,7 @@
           </td>
           <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }"  :style="{ 'width': columnWidths[j] + 'px' }">
 
-            <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
+            <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true" @keyup.38="up" @keyup.39="right" @keyup.40="down" @keyup.37="left"></div>
             <input @input="inputCell($event, i, j)" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
         </tr>
@@ -90,6 +90,32 @@ export default {
   components: {
     draggable
   },
+  mounted () {
+    window.addEventListener('keyup', (event) => {
+      if (!this.isSelected) {
+        return
+      }
+
+      this.values[this.selectY][this.selectX].select = false
+
+      if (event.keyCode === 38 && this.selectY !== 0) { // up
+        this.selectY--
+      }
+
+      if (event.keyCode === 39 && this.selectX !== this.colNum - 1) { // right
+        this.selectX++
+      }
+
+      if (event.keyCode === 40 && this.selectY !== this.rowNum - 1) { // down
+        this.selectY++
+      }
+
+      if (event.keyCode === 37 && this.selectX !== 0) { // left
+        this.selectX--
+      }
+      this.values[this.selectY][this.selectX].select = true
+    })
+  },
   data () {
     return {
       labelPosition: 'center',
@@ -97,6 +123,7 @@ export default {
       beforeColNum: 3, // 増減に対応するために必要
       rowNum: 3,
       colNum: 3,
+      isSelected: false, // 最初クリックしたらそれ以後はtrue
       selectY: 0, // 選択位置
       selectX: 0, // 選択位置
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
@@ -288,6 +315,18 @@ export default {
       this.values.splice(this.selectY + 1, 0, newRow)
       this.rowNum++
     },
+    up () {
+      console.log('up')
+    },
+    right () {
+      console.log('right')
+    },
+    down () {
+      console.log('down')
+    },
+    left () {
+      console.log('left')
+    },
     nextCell (event) { // 次のセルへフォーカス
       // console.log(this.values[0][1].edit)
       // this.values[0][1].edit = false
@@ -295,6 +334,7 @@ export default {
       // this.values[0][2].edit = true
     },
     selectValue (cell, i, j) {
+      this.isSelected = true
       if ((i !== this.selectY || j !== this.selectX)) { // 選択中だが、別のcellを選んだ場合
         this.cellSelectStatus = 0
         this.values[this.selectY][this.selectX].select = false // もともと選択してたものは色を戻す
