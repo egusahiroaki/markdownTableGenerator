@@ -70,6 +70,12 @@
     <!--
     <router-view></router-view>
     -->
+
+    <div class="license">
+      Copyright (c) 2017 Hiroaki Egusa
+      Released under the MIT license
+    </div>
+
   </div>
 </template>
 
@@ -476,5 +482,10 @@ code {
 
   -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
   tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+.license {
+  margin-top:20px;
+  font-size: 10px;
 }
 </style>
