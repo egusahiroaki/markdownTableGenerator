@@ -53,7 +53,7 @@
           <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }"  :style="{ 'width': columnWidths[j] + 'px' }">
 
             <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
-            <input @input="inputCell($event, i, j)" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
+            <input @input="inputCell($event, i, j)" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" @keyup.enter="editFinish(cell)" />
           </td>
         </tr>
       <!-- </draggable> -->
@@ -98,8 +98,8 @@ export default {
 
       this.values[this.selectY][this.selectX].select = false
 
-      if (event.keyCode === 13) { // enter
-        console.log('enter')
+      if (event.keyCode === 13 && !this.isEdited) { // enter
+        this.values[this.selectY][this.selectX].edit = true
       }
 
       if (event.keyCode === 38 && this.selectY !== 0) { // up
@@ -118,6 +118,8 @@ export default {
         this.selectX--
       }
       this.values[this.selectY][this.selectX].select = true
+
+      this.isEdited = false
     })
   },
   data () {
@@ -127,6 +129,7 @@ export default {
       beforeColNum: 3, // 増減に対応するために必要
       rowNum: 3,
       colNum: 3,
+      isEdited: false, // 編集終了
       isSelected: false, // 最初クリックしたらそれ以後はtrue
       selectY: 0, // 選択位置
       selectX: 0, // 選択位置
@@ -318,6 +321,10 @@ export default {
       }
       this.values.splice(this.selectY + 1, 0, newRow)
       this.rowNum++
+    },
+    editFinish (cell) {
+      // この処理のあと、addEventListnerで設定したenterのblockが呼ばれる
+      this.isEdited = true
     },
     nextCell (event) { // 次のセルへフォーカス
       // console.log(this.values[0][1].edit)
