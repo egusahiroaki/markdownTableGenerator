@@ -116,15 +116,8 @@ export default {
   },
   filters: {
     convertAlphabet (num) { // [TODO] この関数は描画の最初にだけ実行されるプロパティに移動させたい
-      var r = []
-      for (var i = 65; i <= 90; i++) {
-        r.push(String.fromCharCode(i))
-      }
-
-      for (var j = 97; j <= 122; j++) {
-        r.push(String.fromCharCode(j))
-      }
-      return r[num]
+      const COLUMN = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz'
+      return COLUMN[num]
     }
   },
   computed: {
