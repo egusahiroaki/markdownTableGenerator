@@ -52,7 +52,7 @@
           </td>
           <td v-for="(cell, j) in cells" @click="selectValue(cell, i, j)" @keyup.enter="submit(cell)" :class="{ active: cell.select }"  :style="{ 'width': columnWidths[j] + 'px' }">
 
-            <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true" @keyup.38="up" @keyup.39="right" @keyup.40="down" @keyup.37="left"></div>
+            <div v-if="!cell.edit" class="display" v-text="cell.text" @click="cell.edit = true"></div>
             <input @input="inputCell($event, i, j)" onfocus="this.style.width = ((this.value.length + 1) * 8) + 'px';" v-if="cell.edit" type="text" v-model="cell.text" v-on:blur="cell.edit = false" ref="textInput" v-focus @keydown.tab="nextCell($event)" />
           </td>
         </tr>
@@ -97,6 +97,10 @@ export default {
       }
 
       this.values[this.selectY][this.selectX].select = false
+
+      if (event.keyCode === 13) { // enter
+        console.log('enter')
+      }
 
       if (event.keyCode === 38 && this.selectY !== 0) { // up
         this.selectY--
@@ -314,18 +318,6 @@ export default {
       }
       this.values.splice(this.selectY + 1, 0, newRow)
       this.rowNum++
-    },
-    up () {
-      console.log('up')
-    },
-    right () {
-      console.log('right')
-    },
-    down () {
-      console.log('down')
-    },
-    left () {
-      console.log('left')
     },
     nextCell (event) { // 次のセルへフォーカス
       // console.log(this.values[0][1].edit)
