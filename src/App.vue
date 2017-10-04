@@ -91,8 +91,8 @@ export default {
       beforeColNum: 3, // 増減に対応するために必要
       rowNum: 3,
       colNum: 3,
-      curSelectRowNum: 0, // 選択位置
-      curSelectColNum: 0, // 選択位置
+      selectY: 0, // 選択位置
+      selectX: 0, // 選択位置
       cellSelectStatus: 0, // 0,1,2を取る。 0: 未選択, 1: 選択中, 2: 編集中
       values: [
         [
@@ -196,9 +196,9 @@ export default {
         }
 
         // 一つずつ減らしているときに、選択中を最下端に移動する or 数値そのものを変更して、現在の選択位置がなくなってしまった場合の対応
-        if (this.curSelectRowNum >= val) {
-          this.values[val - 1][this.curSelectColNum].select = true
-          this.curSelectRowNum = val - 1
+        if (this.selectY >= val) {
+          this.values[val - 1][this.selectX].select = true
+          this.selectY = val - 1
         }
 
         this.rowNum--
@@ -213,9 +213,9 @@ export default {
           }
         })
       } else {  // 列を減らす場合
-        if (this.curSelectColNum === val) { // 現在選択中のcellが表示から消える場合には、右端に選択中を合わせる
-          this.curSelectColNum -= 1
-          this.values[this.curSelectRowNum][val - 1].select = true
+        if (this.selectX === val) { // 現在選択中のcellが表示から消える場合には、右端に選択中を合わせる
+          this.selectX -= 1
+          this.values[this.selectY][val - 1].select = true
         }
 
         this.values.forEach((row) => {
@@ -226,8 +226,8 @@ export default {
       }
 
       // 数値そのものを変更して、現在の選択位置がなくなってしまった場合の対応
-      if (val < this.curSelectColNum) {
-        this.values[this.curSelectRowNum][val].select = true
+      if (val < this.selectX) {
+        this.values[this.selectY][val].select = true
       }
     },
     importCSV (filePath) {
@@ -250,18 +250,18 @@ export default {
     },
     insertColumnLeft () {
       this.values.forEach((row) => {
-        if (this.curSelectColNum === 0) { // 左端を選択しているときは
+        if (this.selectX === 0) { // 左端を選択しているときは
           row.unshift({text: '', edit: false, width: 20, select: false})
         } else {
-          row.splice(this.curSelectColNum, 0, {text: '', edit: false, width: 20, select: false})
+          row.splice(this.selectX, 0, {text: '', edit: false, width: 20, select: false})
         }
       })
-      this.curSelectColNum++ // 追加によるselectの位置の整合性をとる
+      this.selectX++ // 追加によるselectの位置の整合性をとる
       this.colNum++
     },
     insertColumnRight () {
       this.values.forEach((row) => {
-        row.splice(this.curSelectColNum + 1, 0, {text: '', edit: false, width: 20, select: false})
+        row.splice(this.selectX + 1, 0, {text: '', edit: false, width: 20, select: false})
       })
       this.colNum++
     },
@@ -272,21 +272,21 @@ export default {
       // this.values[0][2].edit = true
     },
     selectValue (cell, i, j) {
-      if ((i !== this.curSelectRowNum || j !== this.curSelectColNum)) { // 選択中だが、別のcellを選んだ場合
+      if ((i !== this.selectY || j !== this.selectX)) { // 選択中だが、別のcellを選んだ場合
         this.cellSelectStatus = 0
-        this.values[this.curSelectRowNum][this.curSelectColNum].select = false // もともと選択してたものは色を戻す
+        this.values[this.selectY][this.selectX].select = false // もともと選択してたものは色を戻す
       }
 
-      if (this.cellSelectStatus === 0) { // 未選択の時には、curSelectRowNum, this.curSelectColNumに値を入れて保持
-        this.curSelectRowNum = i
-        this.curSelectColNum = j
+      if (this.cellSelectStatus === 0) { // 未選択の時には、selectY, this.selectXに値を入れて保持
+        this.selectY = i
+        this.selectX = j
         this.cellSelectStatus++ // 1にする
         cell.select = true
         cell.edit = false
         return
       }
 
-      if (i === this.curSelectRowNum && j === this.curSelectColNum) { // どのcellか選択中
+      if (i === this.selectY && j === this.selectX) { // どのcellか選択中
         this.cellSelectStatus++ // 2にする
         if (cell.text === '' && this.cellSelectStatus === 2) { // 編集可能にする
           cell.edit = true
