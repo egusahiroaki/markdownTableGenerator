@@ -23,6 +23,12 @@
       <el-button @click="insertColumnRight" type="small" >Insert Column to the Right</el-button>
     </div>
 
+    <div>
+      <el-button @click="insertAbove" type="small" >Insert Above</el-button>
+      <el-button @click="insertBelow" type="small" >Insert Below</el-button>
+    </div>
+
+
 <!-- 
     <el-upload
       class="upload-demo"
@@ -264,6 +270,12 @@ export default {
         row.splice(this.selectX + 1, 0, {text: '', edit: false, width: 20, select: false})
       })
       this.colNum++
+    },
+    insertAbove () {
+
+    },
+    insertBelow () {
+
     },
     nextCell (event) { // 次のセルへフォーカス
       // console.log(this.values[0][1].edit)
